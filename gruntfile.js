@@ -31,7 +31,7 @@ module.exports = function (grunt) {
 				}
 			},
 			serverJS: {
-				files: defaultAssets.server.allJS,
+				files: _.union(defaultAssets.server.gruntConfig, defaultAssets.server.allJS),
 				tasks: ['jshint'],
 				options: {
 					livereload: true
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
 				options: {
 					nodeArgs: ['--debug'],
 					ext: 'js,html',
-					watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
+					watch: _.union(defaultAssets.server.gruntConfig, defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
 				}
 			}
 		},
@@ -91,7 +91,7 @@ module.exports = function (grunt) {
 		},
 		jshint: {
 			all: {
-				src: _.union(defaultAssets.server.allJS, defaultAssets.client.js, testAssets.tests.server, testAssets.tests.client, testAssets.tests.e2e),
+				src: _.union(defaultAssets.server.gruntConfig, defaultAssets.server.allJS, defaultAssets.client.js, testAssets.tests.server, testAssets.tests.client, testAssets.tests.e2e),
 				options: {
 					jshintrc: true,
 					node: true,
@@ -230,9 +230,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['env:dev', 'lint', 'ngAnnotate', 'uglify', 'cssmin']);
 
 	// Run the project tests
-	grunt.registerTask('test', ['env:test', 'copy:localConfig', 'mongoose', 'mochaTest', 'karma:unit']);
-	grunt.registerTask('test:server', ['env:test', 'mongoose', 'mochaTest']);
-	grunt.registerTask('test:client', ['env:test', 'mongoose', 'karma:unit']);
+	grunt.registerTask('test', ['env:test', 'lint', 'copy:localConfig', 'mongoose', 'mochaTest', 'karma:unit']);
+	grunt.registerTask('test:server', ['env:test', 'lint', 'mongoose', 'mochaTest']);
+	grunt.registerTask('test:client', ['env:test', 'lint', 'mongoose', 'karma:unit']);
 
 	// Run the project in development mode
 	grunt.registerTask('default', ['env:dev', 'lint', 'copy:localConfig', 'concurrent:default']);

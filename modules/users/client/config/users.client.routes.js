@@ -8,7 +8,10 @@ angular.module('users').config(['$stateProvider',
 			state('settings', {
 				abstract: true,
 				url: '/settings',
-				templateUrl: 'modules/users/views/settings/settings.client.view.html'
+				templateUrl: 'modules/users/views/settings/settings.client.view.html',
+				data: {
+					roles: ['user', 'admin']
+				}
 			}).
 			state('settings.profile', {
 				url: '/profile',
@@ -36,7 +39,7 @@ angular.module('users').config(['$stateProvider',
 				templateUrl: 'modules/users/views/authentication/signup.client.view.html'
 			}).
 			state('authentication.signin', {
-				url: '/signin',
+				url: '/signin?err',
 				templateUrl: 'modules/users/views/authentication/signin.client.view.html'
 			}).
 			state('password', {
